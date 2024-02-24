@@ -5,6 +5,7 @@ const image1 = document.getElementById('image1');
 const image2 = document.getElementById('image2');
 const image3 = document.getElementById('image3');
 const textBox = document.getElementById('text-box');
+let isLight;
 
 // Dark or Light Images
 function imageMode(color) {
@@ -13,22 +14,16 @@ function imageMode(color) {
   image3.src = `img/undraw_conceptual_idea_${color}.svg`;
 }
 
-// Dark Mode Styles
-function darkMode() {
-  nav.style.backgroundColor = 'rgb(0 0 0 / 50%)';
-  textBox.style.backgroundColor = 'rgb(255 255 255 / 50%)';
-  toggleIcon.children[0].textContent = 'Dark Mode';
-  toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
-  imageMode('dark');
-}
-
-// Light Mode Styles
-function lightMode() {
-  nav.style.backgroundColor = 'rgb(255 255 255 / 50%)';
-  textBox.style.backgroundColor = 'rgb(0 0 0  / 50%)';
-  toggleIcon.children[0].textContent = 'Light Mode';
-  toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun');
-  imageMode('light');
+function toggleDarkLightMode(isLight) {
+  nav.style.backgroundColor = isLight ? 'rgb(255 255 255 / 50%)' : 'rgb(0 0 0 / 50%)';
+  textBox.style.backgroundColor = isLight
+    ? 'rgb(0 0 0  / 50%)'
+    : 'rgb(255 255 255 / 50%)';
+  toggleIcon.children[0].textContent = isLight ? 'Light Mode' : 'Dark Mode';
+  isLight
+    ? toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun')
+    : toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
+  isLight ? imageMode('light') : imageMode('dark');
 }
 
 // Switch Theme Dynamically
@@ -38,11 +33,11 @@ function switchTheme(event) {
   if (event.target.checked) {
     document.documentElement.setAttribute('data-theme', 'dark');
     localStorage.setItem('theme', 'dark');
-    darkMode();
+    toggleDarkLightMode(false);
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
     localStorage.setItem('theme', 'light');
-    lightMode();
+    toggleDarkLightMode(true);
   }
 }
 
@@ -58,6 +53,6 @@ if (currentTheme) {
 
   if (currentTheme === 'dark') {
     toggleSwitch.checked = true;
-    darkMode();
+    toggleDarkLightMode(false);
   }
 }
