@@ -1,58 +1,63 @@
+// Selectors
 const toggleSwitch = document.querySelector('input[type="checkbox"]');
-const nav = document.getElementById('nav');
-const toggleIcon = document.getElementById('toggle-icon');
-const image1 = document.getElementById('image1');
-const image2 = document.getElementById('image2');
-const image3 = document.getElementById('image3');
-const textBox = document.getElementById('text-box');
-let isLight;
+const elementsToTheme = {
+  nav: document.getElementById('nav'),
+  toggleIcon: document.getElementById('toggle-icon'),
+  images: [
+    document.getElementById('image1'),
+    document.getElementById('image2'),
+    document.getElementById('image3'),
+  ],
+  textBox: document.getElementById('text-box'),
+};
 
-// Dark or Light Images
-function imageMode(color) {
-  image1.src = `img/undraw_proud_coder_${color}.svg`;
-  image2.src = `img/undraw_feeling_proud_${color}.svg`;
-  image3.src = `img/undraw_conceptual_idea_${color}.svg`;
+// Helper function to set theme attributes
+function setThemeAttributes(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
 }
 
-function toggleDarkLightMode(isLight) {
-  nav.style.backgroundColor = isLight ? 'rgb(255 255 255 / 50%)' : 'rgb(0 0 0 / 50%)';
-  textBox.style.backgroundColor = isLight
-    ? 'rgb(0 0 0  / 50%)'
-    : 'rgb(255 255 255 / 50%)';
-  toggleIcon.children[0].textContent = isLight ? 'Light Mode' : 'Dark Mode';
-  isLight
-    ? toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun')
-    : toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon');
-  isLight ? imageMode('light') : imageMode('dark');
+// Update UI Elements based on theme
+function updateUIForTheme(isDark) {
+  const theme = isDark ? 'dark' : 'light';
+  const color = isDark ? 'rgb(0 0 0 / 50%)' : 'rgb(255 255 255 / 50%)';
+  const textColor = isDark ? 'rgb(255 255 255 / 50%)' : 'rgb(0 0 0 / 50%)';
+
+  elementsToTheme.nav.style.backgroundColor = color;
+  elementsToTheme.textBox.style.backgroundColor = textColor;
+  elementsToTheme.toggleIcon.children[0].textContent = isDark
+    ? 'Dark Mode'
+    : 'Light Mode';
+  elementsToTheme.toggleIcon.children[1].classList.replace(
+    isDark ? 'fa-sun' : 'fa-moon',
+    isDark ? 'fa-moon' : 'fa-sun'
+  );
+
+  elementsToTheme.images.forEach((img) => {
+    const themePart = img.dataset.theme;
+    img.src = `img/${themePart}_${theme}.svg`;
+  });
 }
 
-// Switch Theme Dynamically
-function switchTheme(event) {
-  // console.log(event.target.checked);
+// Theme Switch Handler
+function onThemeSwitch() {
+  const isDark = toggleSwitch.checked;
+  setThemeAttributes(isDark ? 'dark' : 'light');
+  updateUIForTheme(isDark);
+}
 
-  if (event.target.checked) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    localStorage.setItem('theme', 'dark');
-    toggleDarkLightMode(false);
-  } else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    localStorage.setItem('theme', 'light');
-    toggleDarkLightMode(true);
-  }
+// Initialize Theme Based on Local Storage or Default
+function initializeTheme() {
+  const currentTheme = localStorage.getItem('theme') || 'light';
+  const isDark = currentTheme === 'dark';
+
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  toggleSwitch.checked = isDark;
+  updateUIForTheme(isDark);
 }
 
 // Event Listener
-toggleSwitch.addEventListener('change', switchTheme);
+toggleSwitch.addEventListener('change', onThemeSwitch);
 
-// Check Local STorage for Theme
-const currentTheme = localStorage.getItem('theme');
-// console.log(currentTheme);
-
-if (currentTheme) {
-  document.documentElement.setAttribute('data-theme', currentTheme);
-
-  if (currentTheme === 'dark') {
-    toggleSwitch.checked = true;
-    toggleDarkLightMode(false);
-  }
-}
+// Initial Setup
+initializeTheme();
