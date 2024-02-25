@@ -1,4 +1,14 @@
-// Selectors
+/**
+ * Theme Switcher for Web Application
+ *
+ * This script allows for dynamic theme switching between 'light' and 'dark' modes within a web application.
+ * It utilizes local storage to remember the user's theme preference across sessions.
+ */
+
+/**
+ * Selectors for DOM elements that will change based on the theme.
+ * @type {Object}
+ */
 const toggleSwitch = document.querySelector('input[type="checkbox"]');
 const elementsToTheme = {
   nav: document.getElementById('nav'),
@@ -11,13 +21,21 @@ const elementsToTheme = {
   textBox: document.getElementById('text-box'),
 };
 
-// Helper function to set theme attributes
+/**
+ * Sets the theme attributes on the document element and in local storage.
+ *
+ * @param {string} theme - The theme to set ('dark' or 'light').
+ */
 function setThemeAttributes(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('theme', theme);
 }
 
-// Update UI Elements based on theme
+/**
+ * Updates the UI elements to reflect the current theme.
+ *
+ * @param {boolean} isDark - Indicates whether the dark mode is enabled.
+ */
 function updateUIForTheme(isDark) {
   const theme = isDark ? 'dark' : 'light';
   const color = isDark ? 'rgb(0 0 0 / 50%)' : 'rgb(255 255 255 / 50%)';
@@ -39,14 +57,19 @@ function updateUIForTheme(isDark) {
   });
 }
 
-// Theme Switch Handler
+/**
+ * Handles the theme switch when the toggle switch changes state.
+ */
 function onThemeSwitch() {
   const isDark = toggleSwitch.checked;
   setThemeAttributes(isDark ? 'dark' : 'light');
   updateUIForTheme(isDark);
 }
 
-// Initialize Theme Based on Local Storage or Default
+/**
+ * Initializes the theme based on the user's previous selection stored in local storage,
+ * or defaults to light theme if no selection is stored.
+ */
 function initializeTheme() {
   const currentTheme = localStorage.getItem('theme') || 'light';
   const isDark = currentTheme === 'dark';
@@ -56,8 +79,8 @@ function initializeTheme() {
   updateUIForTheme(isDark);
 }
 
-// Event Listener
+// Adding an event listener to theme toggle switch to handle theme changes.
 toggleSwitch.addEventListener('change', onThemeSwitch);
 
-// Initial Setup
+// Initial setup call to apply theme based on local storage or default to light theme.
 initializeTheme();
