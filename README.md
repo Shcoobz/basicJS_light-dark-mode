@@ -1,6 +1,9 @@
 # Light-Dark Mode
 
 ![Project Image Light](/img/light-dark-mode_light.png)
+
+<br>
+
 ![Project Image Dark](/img/light-dark-mode_dark.png)
 
 ## Summary
