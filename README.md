@@ -1,4 +1,4 @@
-# Light-Dark Mode
+# [LIVE DEMO](https://shcoobz.github.io/light-dark-mode/) -> Light-Dark Mode
 
 ![Project Image Light](/img/light-dark-mode_light.png)
 
