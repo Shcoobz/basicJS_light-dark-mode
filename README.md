@@ -8,7 +8,7 @@
 
 ## Summary
 
-Welcome to Light-Dark Mode! This application provides a dynamic theme toggling feature that allows users to switch between light and dark modes with ease. It features a user-friendly interface and seamless integration into any web application.
+Light-Dark Mode provides a dynamic theme toggling feature that allows users to switch between light and dark modes with ease. It features a user-friendly interface and seamless integration into any web application.
 
 The core functionality includes:
 
