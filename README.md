@@ -1,4 +1,4 @@
-# basicJS\_ Light-Dark Mode: [LIVE DEMO](https://shcoobz.github.io/basicJS_light-dark-mode/)
+# basicJS_Light-Dark Mode: [LIVE DEMO](https://shcoobz.github.io/basicJS_light-dark-mode/)
 
 ![Project Image Light](/img/basicJS_light-dark-mode_light.png)
 
